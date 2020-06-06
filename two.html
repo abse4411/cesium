@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.69/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.69/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <style>
+    #pills-tabContent {
+      width: 100%;
+      height: 100%;
+    }
+
+    #view3D,
+    #view2D {
+      height: 600px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Tab panes -->
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+      <div id="view2D"></div>
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+      <div id="view3D"></div>
+    </div>
+  </div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+        aria-controls="pills-home" aria-selected="true">
+        二维地图</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+        aria-controls="pills-profile" aria-selected="false">
+        三维地图</a>
+    </li>
+  </ul>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" id="btn_vector">矢量图层</button>
+    <button type="button" class="btn btn-secondary" id="btn_satellite">影像图层</button>
+  </div>
+</body>
+<script>
+
+$(function(){
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMmFjNjdiNi1mMzZlLTRiOWItODRhNC0xNWI2NmIwODYyYmUiLCJpZCI6MjgxMjgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTA2NzYwNTh9.BxJOmxDjvTCxVbaUYidGPhEks8V8lhryYGwWlRKU0BA';
+  // We want our two views to be synced across time, so we create
+  // a shared clock object that both views share
+  var clockViewModel = new Cesium.ClockViewModel();
+  var options3D = {
+    fullscreenElement: 'view3D',
+    terrainProvider: Cesium.createWorldTerrain()
+  };
+  var options2D = {
+    sceneMode: Cesium.SceneMode.SCENE2D,
+    fullscreenElement: 'view2D',
+    baseLayerPicker: false,
+    sceneModePicker:false,
+    animation:false,
+    geocoder:false,
+    sceneModePicker:false,
+    selectionIndicator:false,
+    timeline:false,
+    navigationHelpButton:false
+    // imageryProvider: new Cesium.UrlTemplateImageryProvider({
+    //   url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
+    //   minimumLevel: 1,
+    //   maximumLevel: 18
+    // })
+  };
+  // We create two viewers, a 2D and a 3D one
+  // The CSS is set up to place them side by side
+  var view3D = new Cesium.Viewer("view3D", options3D);
+  var view2D = new Cesium.Viewer("view2D", options2D);
+
+  var boundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(117.957471, 27.651282, 300), 10000);
+  // Set custom initial position
+  view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
+  view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
+
+
+
+  //高德矢量地图
+  var gd_verctor = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+    url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
+  }));
+  //高德卫星图
+  var gd_satellite = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+    url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8",
+    minimumLevel: 3,
+    maximumLevel: 18
+  }));
+  $('#btn_vector').on('click', function () {
+    if (view2D.imageryLayers.contains(gd_verctor)) {
+      alert('gd_verctor');
+    }
+    view2D.imageryLayers.lowerToBottom (gd_satellite);
+    view2D.imageryLayers.raiseToTop(gd_verctor);
+  });
+  $('#btn_satellite').on('click', function () {
+    if (view2D.imageryLayers.contains(gd_satellite)) {
+      alert('gd_satellite');
+    }
+    view2D.imageryLayers.lowerToBottom (gd_verctor);
+    view2D.imageryLayers.raiseToTop(gd_satellite);
+  });
+});
+</script>
+</html>

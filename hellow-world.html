@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.69/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.69/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body class="bg-dark">
+  <!-- <div id="cesiumContainer" style="height: 100%;">
+
+  </div>
+  <ul id="map-switcher" class="nav nav-pills justify-content-center fixed-bottom mb-5">
+    <li class="nav-item">
+      <a id="btn_to2d" class="nav-link active" href="#">二维地图</a>
+    </li>
+    <li class="nav-item">
+      <a id="btn_to3d" class="nav-link" href="#">三维地图</a>
+    </li>
+  </ul> -->
+</body>
+<!-- <script>
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMmFjNjdiNi1mMzZlLTRiOWItODRhNC0xNWI2NmIwODYyYmUiLCJpZCI6MjgxMjgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTA2NzYwNTh9.BxJOmxDjvTCxVbaUYidGPhEks8V8lhryYGwWlRKU0BA';
+  var viewer = new Cesium.Viewer("cesiumContainer", {
+    fullscreenElement: 'cesiumContainer',
+    sceneMode: Cesium.SceneMode.SCENE2D,
+    terrainProvider: Cesium.createWorldTerrain(),
+    imageryProvider: new Cesium.UrlTemplateImageryProvider({
+      url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
+      minimumLevel: 3,
+      maximumLevel: 18
+    })
+
+  });
+  var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+      url: Cesium.IonResource.fromAssetId(108121),
+    })
+  );
+  viewer.zoomTo(tileset);
+</script>
+<script>
+  function selectCurrent(current) {
+    $('#map-switcher a[class~=active]').removeClass('active');
+    current.addClass('active')
+  }
+  $('#btn_to2d').on('click', function (e) {
+    e.preventDefault();
+    selectCurrent($(this));
+    viewer.scene.morphTo2D(0);
+  })
+  $('#btn_to3d').on('click', function (e) {
+    e.preventDefault()
+    selectCurrent($(this));
+    viewer.scene.morphTo3D(0);
+  });
+</script> -->
+
+</html>
