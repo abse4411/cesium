@@ -103,16 +103,11 @@ $(function(){
     maximumLevel: 18
   }));
   $('#btn_vector').on('click', function () {
-    if (view2D.imageryLayers.contains(gd_verctor)) {
-      alert('gd_verctor');
-    }
     view2D.imageryLayers.lowerToBottom (gd_satellite);
     view2D.imageryLayers.raiseToTop(gd_verctor);
   });
   $('#btn_satellite').on('click', function () {
-    if (view2D.imageryLayers.contains(gd_satellite)) {
-      alert('gd_satellite');
-    }
+
     view2D.imageryLayers.lowerToBottom (gd_verctor);
     view2D.imageryLayers.raiseToTop(gd_satellite);
   });
