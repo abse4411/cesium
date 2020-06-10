@@ -20,18 +20,52 @@
     #view2D {
       height: 600px;
     }
+
+    .map-tool-bar {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+    }
   </style>
 </head>
 
 <body>
-
   <!-- Tab panes -->
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
       <div id="view2D"></div>
+      <div class="map-tool-bar">
+        <div class="float-right mb-3">
+          <button class="btn btn-sm bg-light" type="button" data-toggle="collapse" data-target="#collapseExample"
+            data-placement="bottom" title="选择图层" aria-expanded="false" aria-controls="collapseExample">
+            <img src="assets/layers.svg" width="24px" />
+          </button>
+          <button class="btn btn-sm bg-light" type="button" id="btn_home_2d" data-placement="bottom" title="回到原点">
+            <img src="assets/home.svg" width="24px" />
+          </button>
+        </div>
+        <div class="collapse" id="collapseExample" style="clear: both;">
+          <div class="card card-body">
+            <form class="form-inline">
+              <label class="my-1 mr-2" for="inlineFormCustomSelectPref">图层选择</label>
+              <select class="form-control form-control-sm" id="map2d_layer_selecter">
+                <option value="1">矢量图层</option>
+                <option value="2">影像图层</option>
+              </select>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
       <div id="view3D"></div>
+      <div class="map-tool-bar">
+        <div class="float-right mb-3">
+          <button class="btn btn-sm bg-light" type="button" id="btn_home_3d" data-placement="bottom" title="回到原点">
+            <img src="assets/home.svg" width="24px" />
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <!-- Nav tabs -->
@@ -47,70 +81,87 @@
         三维地图</a>
     </li>
   </ul>
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-secondary" id="btn_vector">矢量图层</button>
-    <button type="button" class="btn btn-secondary" id="btn_satellite">影像图层</button>
-  </div>
 </body>
 <script>
 
-$(function(){
-  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMmFjNjdiNi1mMzZlLTRiOWItODRhNC0xNWI2NmIwODYyYmUiLCJpZCI6MjgxMjgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTA2NzYwNTh9.BxJOmxDjvTCxVbaUYidGPhEks8V8lhryYGwWlRKU0BA';
-  // We want our two views to be synced across time, so we create
-  // a shared clock object that both views share
-  var clockViewModel = new Cesium.ClockViewModel();
-  var options3D = {
-    fullscreenElement: 'view3D',
-    terrainProvider: Cesium.createWorldTerrain()
-  };
-  var options2D = {
-    sceneMode: Cesium.SceneMode.SCENE2D,
-    fullscreenElement: 'view2D',
-    baseLayerPicker: false,
-    sceneModePicker:false,
-    animation:false,
-    geocoder:false,
-    sceneModePicker:false,
-    selectionIndicator:false,
-    timeline:false,
-    navigationHelpButton:false
-    // imageryProvider: new Cesium.UrlTemplateImageryProvider({
-    //   url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
-    //   minimumLevel: 1,
-    //   maximumLevel: 18
-    // })
-  };
-  // We create two viewers, a 2D and a 3D one
-  // The CSS is set up to place them side by side
-  var view3D = new Cesium.Viewer("view3D", options3D);
-  var view2D = new Cesium.Viewer("view2D", options2D);
+  $(function () {
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMmFjNjdiNi1mMzZlLTRiOWItODRhNC0xNWI2NmIwODYyYmUiLCJpZCI6MjgxMjgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTA2NzYwNTh9.BxJOmxDjvTCxVbaUYidGPhEks8V8lhryYGwWlRKU0BA';
+    // We want our two views to be synced across time, so we create
+    // a shared clock object that both views share
+    var clockViewModel = new Cesium.ClockViewModel();
+    var options3D = {
+      fullscreenElement: 'view3D',
+      terrainProvider: Cesium.createWorldTerrain(),
+      baseLayerPicker: false,
+      sceneModePicker: false,
+      animation: false,
+      geocoder: false,
+      sceneModePicker: false,
+      selectionIndicator: false,
+      timeline: false,
+      navigationHelpButton: false,
+      homeButton: false
+    };
+    var options2D = {
+      sceneMode: Cesium.SceneMode.SCENE2D,
+      fullscreenElement: 'view2D',
+      baseLayerPicker: false,
+      sceneModePicker: false,
+      animation: false,
+      geocoder: false,
+      sceneModePicker: false,
+      selectionIndicator: false,
+      timeline: false,
+      navigationHelpButton: false,
+      homeButton: false
+    };
+    // We create two viewers, a 2D and a 3D one
+    // The CSS is set up to place them side by side
+    var view3D = new Cesium.Viewer("view3D", options3D);
+    var view2D = new Cesium.Viewer("view2D", options2D);
 
-  var boundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(117.957471, 27.651282, 300), 10000);
-  // Set custom initial position
-  view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
-  view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
+    var boundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(117.957471, 27.651282, 500), 5000);
+    // Set custom initial position
+    view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
+    view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
 
 
-
-  //高德矢量地图
-  var gd_verctor = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-    url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
-  }));
-  //高德卫星图
-  var gd_satellite = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-    url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8",
-    minimumLevel: 3,
-    maximumLevel: 18
-  }));
-  $('#btn_vector').on('click', function () {
-    view2D.imageryLayers.lowerToBottom (gd_satellite);
-    view2D.imageryLayers.raiseToTop(gd_verctor);
+    //高德中文图注
+    var gd_satellite_label = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8",
+    }));
+    var gd_satellite_label = view3D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8",
+    }));
+    //高德卫星图
+    var gd_satellite = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "https://webst02.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}",
+    }));
+    //高德矢量地图
+    var gd_verctor = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
+    }));
+    $('#map2d_layer_selecter').change(function () {
+      switch ($(this).val()) {
+        case "1":
+          view2D.imageryLayers.lowerToBottom(gd_satellite);
+          view2D.imageryLayers.raiseToTop(gd_verctor);
+          break;
+        case "2":
+          view2D.imageryLayers.lowerToBottom(gd_verctor);
+          view2D.imageryLayers.raiseToTop(gd_satellite);
+          view2D.imageryLayers.raiseToTop(gd_satellite_label);
+        default:
+          return;
+      }
+    });
+    $('#btn_home_2d').click(function () {
+      view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 5 });
+    });
+    $('#btn_home_3d').click(function () {
+      view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 5 });
+    });
   });
-  $('#btn_satellite').on('click', function () {
-
-    view2D.imageryLayers.lowerToBottom (gd_verctor);
-    view2D.imageryLayers.raiseToTop(gd_satellite);
-  });
-});
 </script>
+
 </html>
