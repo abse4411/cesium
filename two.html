@@ -126,34 +126,39 @@
     view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
 
 
-    var gd_satellite_label = view3D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-      url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8",
+    //添加谷歌卫星图到2d地图
+    var gle_satellite_layer = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "http://www.google.cn/maps/vt?lyrs=s@800&x={x}&y={y}&z={z}",
     }));
-    //高德卫星图
-    var gd_satellite = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-      url: "https://webst02.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}",
+    //添加天地图中文图注到3d地图
+    var td_chinese_label_3d = view3D.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.com/cva_w/wmts?tk=1b9f8327df331a175d1247be9fa4b03f&service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg",
+      layer: "tdtAnnoLayer",
+      style: "default",
+      format: "image/jpeg",
+      tileMatrixSetID: "GoogleMapsCompatible"
     }));
-    //高德中文图注
-    var gd_satellite_label = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-      url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8",
+    //添加天地图矢量到2d地图
+    var td_verctor_layer = view2D.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.com/vec_w/wmts?tk=1b9f8327df331a175d1247be9fa4b03f&service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+      layer: "tdtVecBasicLayer",
+      style: "default",
+      format: "image/jpeg",
+      tileMatrixSetID: "GoogleMapsCompatible",
+      show: false
     }));
-    //高德矢量地图
-    var gd_verctor = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-      url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
+    //添加天地图中文图注到2d地图
+    var td_chinese_label_2d = view2D.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.com/cva_w/wmts?tk=1b9f8327df331a175d1247be9fa4b03f&service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg",
+      layer: "tdtAnnoLayer",
+      style: "default",
+      format: "image/jpeg",
+      tileMatrixSetID: "GoogleMapsCompatible"
     }));
     $('#map2d_layer_selecter').change(function () {
-      switch ($(this).val()) {
-        case "1":
-          view2D.imageryLayers.lowerToBottom(gd_satellite);
-          view2D.imageryLayers.raiseToTop(gd_verctor);
-          break;
-        case "2":
-          view2D.imageryLayers.lowerToBottom(gd_verctor);
-          view2D.imageryLayers.raiseToTop(gd_satellite);
-          view2D.imageryLayers.raiseToTop(gd_satellite_label);
-        default:
-          return;
-      }
+      td_verctor_layer.show = !td_verctor_layer.show;
+      gle_satellite_layer.show = !gle_satellite_layer.show;
+      console.log(view2D.imageryLayers);
     });
     $('#btn_home_2d').click(function () {
       view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 5 });
