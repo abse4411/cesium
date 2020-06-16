@@ -116,7 +116,6 @@
       homeButton: false
     };
     // We create two viewers, a 2D and a 3D one
-    // The CSS is set up to place them side by side
     var view3D = new Cesium.Viewer("view3D", options3D);
     var view2D = new Cesium.Viewer("view2D", options2D);
 
@@ -155,14 +154,18 @@
       format: "image/jpeg",
       tileMatrixSetID: "GoogleMapsCompatible"
     }));
+    //2d地图切换图层
     $('#map2d_layer_selecter').change(function () {
+      //直接切换两个图层的显隐
       td_verctor_layer.show = !td_verctor_layer.show;
       gle_satellite_layer.show = !gle_satellite_layer.show;
       console.log(view2D.imageryLayers);
     });
+    //二维地图回到原点按钮处理
     $('#btn_home_2d').click(function () {
       view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 5 });
     });
+    //三维地图回到原点按钮处理
     $('#btn_home_3d').click(function () {
       view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 5 });
     });
