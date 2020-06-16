@@ -169,7 +169,140 @@
     $('#btn_home_3d').click(function () {
       view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 5 });
     });
+    //多路线经纬度数组
+    var majorRoutes = [
+      {
+        label: '路线一',
+        labelPosition: {
+          lng: 117.94133978757948,
+          lat: 27.647918656108324
+        },
+        themeColor: '#3498db',
+        points: [
+          117.94448993613686, 27.653413334209205,
+          117.94419333929802, 27.65284838743899,
+          117.94396735972789, 27.65226931708033,
+          117.94344478439646, 27.651873854179545,
+          117.94272447694117, 27.6514077726631,
+          117.94186293387085, 27.65091344423916,
+          117.9414392237932, 27.650475610977136,
+          117.94112850242304, 27.650122518976357,
+          117.94105788407674, 27.649416335513582,
+          117.94114205599438, 27.64882257115619,
+          117.94125504524067, 27.648328242732262,
+          117.94133978757948, 27.647918656108324,
+          117.9416222609646, 27.6475796878307,
+          117.94220133118853, 27.647396080238128,
+          117.94290751465131, 27.64760793527696,
+          117.94352895631407, 27.647989274454602,
+          117.94415688318216, 27.64795454072547,
+          117.94491956153745, 27.64765794280906,
+          117.94552687974645, 27.6471353680164,
+          117.94617656831669, 27.646711657938734,
+          117.94723584351084, 27.646513925814872,
+          117.94822352141837, 27.646712634166473,
+          117.94840712954966, 27.64723521003669,
+          117.94867547948103, 27.64818149544578,
+        ]
+      },
+      {
+        label: '路线二',
+        labelPosition: {
+          lng: 117.95691897837101,
+          lat: 27.6558807548145
+        },
+        themeColor: '#27ae60',
+        points: [
+          117.95669525225435, 27.656879562817,
+          117.95676289041495, 27.65667144527763,
+          117.9567837020498, 27.65649454528979,
+          117.95688255796038, 27.656312442442847,
+          117.95690857265282, 27.656114730820143,
+          117.95691897837101, 27.6558807548145,
+          117.95696580489674, 27.65572466665998,
+          117.95692909615619, 27.65551626138609,
+          117.9567261814759, 27.655537073020938,
+          117.9565700933214, 27.655495449155815,
+          117.95657009332139, 27.65533415834067,
+        ]
+      }
+
+    ];
+    var pinBuilder = new Cesium.PinBuilder();
+    for (let route of majorRoutes) {
+      let line = view2D.entities.add({
+        name: route.label,
+        polyline: {
+          positions: Cesium.Cartesian3.fromDegreesArray(route.points),
+          width: 6,
+          material: new Cesium.PolylineDashMaterialProperty({
+            color: Cesium.Color.fromCssColorString(route.themeColor),
+            gapColor: Cesium.Color.fromCssColorString('#e67e22')
+          })
+        },
+        description: '\
+        <div class="card" style="width: 18rem;">\
+  <img src="..." class="card-img-top" alt="...">\
+  <div class="card-body">\
+    <h5 class="card-title">Card title</h5>\
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>\
+    <a href="#" class="btn btn-primary">Go somewhere</a>\
+  </div>\
+</div>',
+        position: Cesium.Cartesian3.fromDegrees(route.labelPosition.lng, route.labelPosition.lat),
+        billboard: {
+          image: pinBuilder.fromText(route.label, Cesium.Color.fromCssColorString(route.themeColor), 96).toDataURL(),
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+        }
+      });
+    }
+
+    //getPosition(view2D);
   });
+  function getPosition(viewer) {
+    //得到当前三维场景
+    var scene = viewer.scene;
+    //得到当前三维场景的椭球体
+    var ellipsoid = scene.globe.ellipsoid;
+    var entity = viewer.entities.add({
+      label: {
+        show: false
+      }
+    });
+    var longitudeString = null;
+    var latitudeString = null;
+    var height = null;
+    var cartesian = null;
+    // 定义当前场景的画布元素的事件处理
+    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+    //设置鼠标移动事件的处理函数，这里负责监听x,y坐标值变化
+    handler.setInputAction(function (movement) {
+      //通过指定的椭球或者地图对应的坐标系，将鼠标的二维坐标转换为对应椭球体三维坐标
+      cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+      if (cartesian) {
+        //将笛卡尔坐标转换为地理坐标
+        var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+        //将弧度转为度的十进制度表示
+        longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
+        latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
+        //获取相机高度
+        height = Math.ceil(viewer.camera.positionCartographic.height);
+        entity.position = cartesian;
+        entity.label.show = true;
+        entity.label.text = '(' + longitudeString + ', ' + latitudeString + "," + height + ')';
+        console.log(longitudeString + ',' + latitudeString + ',');
+      } else {
+        entity.label.show = false;
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    //设置鼠标滚动事件的处理函数，这里负责监听高度值变化
+    handler.setInputAction(function (wheelment) {
+      height = Math.ceil(viewer.camera.positionCartographic.height);
+      entity.position = cartesian;
+      entity.label.show = true;
+      entity.label.text = '(' + longitudeString + ', ' + latitudeString + "," + height + ')';
+    }, Cesium.ScreenSpaceEventType.WHEEL);
+  }
 </script>
 
 </html>
