@@ -11,14 +11,21 @@
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.css" rel="stylesheet">
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <style>
-    #pills-tabContent {
+    #view3D,
+    #view2D {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: none;
       width: 100%;
       height: 100%;
     }
-
-    #view3D,
-    #view2D {
-      height: 600px;
+    #pills-tab {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      border: none;
     }
 
     .map-tool-bar {
@@ -33,7 +40,6 @@
       left: 1em;
       display: none;
       width: 26rem;
-      max-height: 32rem;
     }
   </style>
   <!-- 需要注意的是:
@@ -53,69 +59,79 @@
 </head>
 
 <body>
-  <!-- Tab panes -->
-  <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-      <div id="view2D"></div>
-      <div class="map-tool-bar">
-        <div class="float-right mb-3">
-          <button class="btn btn-sm bg-light" type="button" data-toggle="collapse" data-target="#collapseExample"
-            data-placement="bottom" title="选择图层" aria-expanded="false" aria-controls="collapseExample">
-            <img src="assets/layers.svg" width="24px" />
-          </button>
-          <button class="btn btn-sm bg-light" type="button" id="btn_home_2d" data-placement="bottom" title="回到原点">
-            <img src="assets/home.svg" width="24px" />
-          </button>
+  <div class="container-fluid">
+    <!-- Tab panes -->
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div id="view2D"></div>
+        <div class="map-tool-bar">
+          <div class="float-right mb-3">
+            <button class="btn btn-sm bg-light" type="button" data-toggle="collapse" data-target="#collapseExample"
+              data-placement="bottom" title="选择图层" aria-expanded="false" aria-controls="collapseExample">
+              <img src="assets/layers.svg" width="24px" />
+            </button>
+            <button class="btn btn-sm bg-light" type="button" id="btn_home_2d" data-placement="bottom" title="回到原点">
+              <img src="assets/home.svg" width="24px" />
+            </button>
+          </div>
+          <div class="collapse" id="collapseExample" style="clear: both;">
+            <div class="card card-body">
+              <form class="form-inline">
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">图层选择</label>
+                <select class="form-control form-control-sm" id="map2d_layer_selecter">
+                  <option value="1">矢量图层</option>
+                  <option value="2">影像图层</option>
+                </select>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="collapse" id="collapseExample" style="clear: both;">
-          <div class="card card-body">
-            <form class="form-inline">
-              <label class="my-1 mr-2" for="inlineFormCustomSelectPref">图层选择</label>
-              <select class="form-control form-control-sm" id="map2d_layer_selecter">
-                <option value="1">矢量图层</option>
-                <option value="2">影像图层</option>
-              </select>
-            </form>
+        <div class="accordion" id="accordionExample">
+          <div class="card border-primary" id="info_card">
+            <div class="card-header" id="headingOne">
+              <button id="info_header" class="btn btn-link btn-block text-left text-center" type="button"
+                data-toggle="collapse" data-target="#collapseCard" aria-expanded="true" aria-controls="collapseCard">
+                Collapsible Group Item #1
+              </button>
+            </div>
+            <div class="collapse show" id="collapseCard">
+              <div class="card-body overflow-auto" id="info_body" style="max-height: 26rem;">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+            <div class="card-footer text-right">
+              <a href="#" class="btn btn-primary">查看360°全景图</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card border-primary overflow-auto" id="info_card">
-        <h5 class="card-header" id="info_header">Featured</h5>
-        <div class="card-body" id="info_body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-muted">
-          <a href="#" class="btn btn-primary">查看360°全景图</a>
-        </div>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-      <div id="view3D"></div>
-      <div class="map-tool-bar">
-        <div class="float-right mb-3">
-          <button class="btn btn-sm bg-light" type="button" id="btn_home_3d" data-placement="bottom" title="回到原点">
-            <img src="assets/home.svg" width="24px" />
-          </button>
+      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div id="view3D"></div>
+        <div class="map-tool-bar">
+          <div class="float-right mb-3">
+            <button class="btn btn-sm bg-light" type="button" id="btn_home_3d" data-placement="bottom" title="回到原点">
+              <img src="assets/home.svg" width="24px" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-pills justify-content-center mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item bg-light" role="presentation" style="border-radius: 0.25rem 0 0 0.25rem;">
+        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+          aria-controls="pills-home" aria-selected="true">
+          二维地图</a>
+      </li>
+      <li class="nav-item bg-light" role="presentation" style="border-radius:0 0.25rem 0.25rem 0;">
+        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+          aria-controls="pills-profile" aria-selected="false">
+          三维地图</a>
+      </li>
+    </ul>
   </div>
-  <!-- Nav tabs -->
-  <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
-        aria-controls="pills-home" aria-selected="true">
-        二维地图</a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-        aria-controls="pills-profile" aria-selected="false">
-        三维地图</a>
-    </li>
-  </ul>
-
 </body>
 
 <script>
@@ -143,7 +159,7 @@
       animation: false,
       geocoder: false,
       sceneModePicker: false,
-      selectionIndicator: true,
+      selectionIndicator: false,
       timeline: false,
       navigationHelpButton: false,
       homeButton: false,
@@ -158,9 +174,10 @@
     view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
     view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
 
-
-    //添加谷歌卫星图到2d地图
-    var gle_satellite_layer = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+    //移除所有3d地图图层
+    view3D.imageryLayers.removeAll();
+    //添加谷歌卫星图层到3d地图
+    var gle_satellite_layer_3d = view3D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
       url: "http://www.google.cn/maps/vt?lyrs=s@800&x={x}&y={y}&z={z}",
     }));
     //添加天地图中文图注到3d地图
@@ -171,7 +188,13 @@
       format: "image/jpeg",
       tileMatrixSetID: "GoogleMapsCompatible"
     }));
-    //添加天地图矢量到2d地图
+    //移除所有2d地图图层
+    view2D.imageryLayers.removeAll();
+    //添加谷歌卫星图层到2d地图
+    var gle_satellite_layer_2d = view2D.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "http://www.google.cn/maps/vt?lyrs=s@800&x={x}&y={y}&z={z}",
+    }));
+    //添加天地图矢量图层到2d地图
     var td_verctor_layer = view2D.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
       url: "http://t0.tianditu.com/vec_w/wmts?tk=1b9f8327df331a175d1247be9fa4b03f&service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
       layer: "tdtVecBasicLayer",
@@ -190,9 +213,8 @@
     }));
     //2d地图切换图层
     $('#map2d_layer_selecter').change(function () {
-      //直接切换两个图层的显隐
+      //直接矢量图层的显隐
       td_verctor_layer.show = !td_verctor_layer.show;
-      gle_satellite_layer.show = !gle_satellite_layer.show;
       console.log(view2D.imageryLayers);
     });
     //二维地图回到原点按钮处理
@@ -233,12 +255,10 @@
       let pick = view2D.scene.pick(event.position);
       let selectedEntity = view2D.selectedEntity;
       if (pick && selectedEntity) {
-        $('#info_card').fadeIn('fast');
-        //$('#info_card').show();
-
-        console.log(selectedEntity.description.getValue(0));
         $('#info_body').html(selectedEntity.description.getValue(0));
         $('#info_header').text(selectedEntity.name);
+        $('#collapseCard').collapse('show');
+        $('#info_card').fadeIn('fast');
       }
       else {
         $('#info_card').fadeOut('fast');
