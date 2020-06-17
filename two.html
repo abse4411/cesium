@@ -214,7 +214,7 @@
     }));
     //2d地图切换图层
     $('#map2d_layer_selecter').change(function () {
-      //直接矢量图层的显隐
+      //直接设置矢量图层的显隐
       td_verctor_layer.show = !td_verctor_layer.show;
       console.log(view2D.imageryLayers);
     });
@@ -250,12 +250,13 @@
       });
     }
     //getPosition(view2D);
-    //设置双击实体实践
+    //设置双击实体事件
     var double_click_handler = new Cesium.ScreenSpaceEventHandler(view2D.scene.canvas);
     double_click_handler.setInputAction(function (event) {
       let pick = view2D.scene.pick(event.position);
       let selectedEntity = view2D.selectedEntity;
       if (pick && selectedEntity) {
+        //聚焦到选中实体
         view2D.zoomTo(selectedEntity);
       }
     }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
@@ -265,16 +266,21 @@
       let pick = view2D.scene.pick(event.position);
       let selectedEntity = view2D.selectedEntity;
       if (pick && selectedEntity) {
+        //设置信息框内容
         $('#info_body').html(selectedEntity.description.getValue(0));
         $('#info_header').text(selectedEntity.name);
-        $('#collapseCard').collapse('show');
+        //展开内容信息框内容
         $('#info_card').fadeIn('fast');
+        //显示信息框
+        $('#collapseCard').collapse('show');
       }
       else {
         $('#info_card').fadeOut('fast');
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   });
+
+  //点击获取当前经纬度高程信息
   function getPosition(viewer) {
     //得到当前三维场景
     var scene = viewer.scene;
