@@ -26,7 +26,30 @@
       top: 1em;
       right: 1em;
     }
+
+    #info_card {
+      position: absolute;
+      top: 1em;
+      left: 1em;
+      display: none;
+      width: 26rem;
+      max-height: 32rem;
+    }
   </style>
+  <!-- 需要注意的是:
+     <script type="text/javascript" src="./index.json?callback=dataJson"></script>中的
+        src中： ? 之前为文件地址，? 之后为回调函数callback名称，
+        回调函数可以简写为 cb ,  回调函数名称要与文件中的名称一致，如本文件中的dataJson
+        如，index.json?cb=abc，那么 index.json 的名字为 abc-->
+  <script>
+    //获取路线数据回调
+    function dataJson(result) {
+      console.log(result);
+      dataResult = result;
+    }
+  </script>
+  <!-- 引入要放在后面 -->
+  <script type="text/javascript" src="./assets/routes.json?cb=dataJson"></script>
 </head>
 
 <body>
@@ -56,6 +79,17 @@
           </div>
         </div>
       </div>
+      <div class="card border-primary overflow-auto" id="info_card">
+        <h5 class="card-header" id="info_header">Featured</h5>
+        <div class="card-body" id="info_body">
+          <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        <div class="card-footer text-muted">
+          <a href="#" class="btn btn-primary">查看360°全景图</a>
+        </div>
+      </div>
     </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
       <div id="view3D"></div>
@@ -81,14 +115,13 @@
         三维地图</a>
     </li>
   </ul>
+
 </body>
+
 <script>
 
   $(function () {
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMmFjNjdiNi1mMzZlLTRiOWItODRhNC0xNWI2NmIwODYyYmUiLCJpZCI6MjgxMjgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTA2NzYwNTh9.BxJOmxDjvTCxVbaUYidGPhEks8V8lhryYGwWlRKU0BA';
-    // We want our two views to be synced across time, so we create
-    // a shared clock object that both views share
-    var clockViewModel = new Cesium.ClockViewModel();
     var options3D = {
       fullscreenElement: 'view3D',
       terrainProvider: Cesium.createWorldTerrain(),
@@ -110,16 +143,17 @@
       animation: false,
       geocoder: false,
       sceneModePicker: false,
-      selectionIndicator: false,
+      selectionIndicator: true,
       timeline: false,
       navigationHelpButton: false,
-      homeButton: false
+      homeButton: false,
+      infoBox: false
     };
     // We create two viewers, a 2D and a 3D one
     var view3D = new Cesium.Viewer("view3D", options3D);
     var view2D = new Cesium.Viewer("view2D", options2D);
 
-    var boundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(117.957471, 27.651282, 500), 5000);
+    var boundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(117.957471, 27.651282), 5000);
     // Set custom initial position
     view2D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
     view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 0 });
@@ -169,67 +203,11 @@
     $('#btn_home_3d').click(function () {
       view3D.camera.flyToBoundingSphere(boundingSphere, { duration: 5 });
     });
-    //多路线经纬度数组
-    var majorRoutes = [
-      {
-        label: '路线一',
-        labelPosition: {
-          lng: 117.94133978757948,
-          lat: 27.647918656108324
-        },
-        themeColor: '#3498db',
-        points: [
-          117.94448993613686, 27.653413334209205,
-          117.94419333929802, 27.65284838743899,
-          117.94396735972789, 27.65226931708033,
-          117.94344478439646, 27.651873854179545,
-          117.94272447694117, 27.6514077726631,
-          117.94186293387085, 27.65091344423916,
-          117.9414392237932, 27.650475610977136,
-          117.94112850242304, 27.650122518976357,
-          117.94105788407674, 27.649416335513582,
-          117.94114205599438, 27.64882257115619,
-          117.94125504524067, 27.648328242732262,
-          117.94133978757948, 27.647918656108324,
-          117.9416222609646, 27.6475796878307,
-          117.94220133118853, 27.647396080238128,
-          117.94290751465131, 27.64760793527696,
-          117.94352895631407, 27.647989274454602,
-          117.94415688318216, 27.64795454072547,
-          117.94491956153745, 27.64765794280906,
-          117.94552687974645, 27.6471353680164,
-          117.94617656831669, 27.646711657938734,
-          117.94723584351084, 27.646513925814872,
-          117.94822352141837, 27.646712634166473,
-          117.94840712954966, 27.64723521003669,
-          117.94867547948103, 27.64818149544578,
-        ]
-      },
-      {
-        label: '路线二',
-        labelPosition: {
-          lng: 117.95691897837101,
-          lat: 27.6558807548145
-        },
-        themeColor: '#27ae60',
-        points: [
-          117.95669525225435, 27.656879562817,
-          117.95676289041495, 27.65667144527763,
-          117.9567837020498, 27.65649454528979,
-          117.95688255796038, 27.656312442442847,
-          117.95690857265282, 27.656114730820143,
-          117.95691897837101, 27.6558807548145,
-          117.95696580489674, 27.65572466665998,
-          117.95692909615619, 27.65551626138609,
-          117.9567261814759, 27.655537073020938,
-          117.9565700933214, 27.655495449155815,
-          117.95657009332139, 27.65533415834067,
-        ]
-      }
 
-    ];
+    //绘制线路以及标签
+    //dataResult为本地数据，通过jsonp获取
     var pinBuilder = new Cesium.PinBuilder();
-    for (let route of majorRoutes) {
+    for (let route of dataResult.data) {
       let line = view2D.entities.add({
         name: route.label,
         polyline: {
@@ -240,15 +218,7 @@
             gapColor: Cesium.Color.fromCssColorString('#e67e22')
           })
         },
-        description: '\
-        <div class="card" style="width: 18rem;">\
-  <img src="..." class="card-img-top" alt="...">\
-  <div class="card-body">\
-    <h5 class="card-title">Card title</h5>\
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>\
-    <a href="#" class="btn btn-primary">Go somewhere</a>\
-  </div>\
-</div>',
+        description: route.description,
         position: Cesium.Cartesian3.fromDegrees(route.labelPosition.lng, route.labelPosition.lat),
         billboard: {
           image: pinBuilder.fromText(route.label, Cesium.Color.fromCssColorString(route.themeColor), 96).toDataURL(),
@@ -256,8 +226,24 @@
         }
       });
     }
-
     //getPosition(view2D);
+    //设置点击实体的信息框
+    var handler = new Cesium.ScreenSpaceEventHandler(view2D.scene.canvas);
+    handler.setInputAction(function (event) {
+      let pick = view2D.scene.pick(event.position);
+      let selectedEntity = view2D.selectedEntity;
+      if (pick && selectedEntity) {
+        $('#info_card').fadeIn('fast');
+        //$('#info_card').show();
+
+        console.log(selectedEntity.description.getValue(0));
+        $('#info_body').html(selectedEntity.description.getValue(0));
+        $('#info_header').text(selectedEntity.name);
+      }
+      else {
+        $('#info_card').fadeOut('fast');
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   });
   function getPosition(viewer) {
     //得到当前三维场景
@@ -304,5 +290,6 @@
     }, Cesium.ScreenSpaceEventType.WHEEL);
   }
 </script>
+
 
 </html>

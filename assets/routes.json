@@ -1,0 +1,124 @@
+dataJson({
+  "data":[
+    {
+    "label": "路线一",
+    "labelPosition": {
+      "lng": 117.94133978757948,
+      "lat": 27.647918656108324
+      },
+    "themeColor": "#3498db",
+    "points": [
+        117.94448993613686,
+        27.653413334209205,
+        117.94419333929802,
+        27.65284838743899,
+        117.94396735972789,
+        27.65226931708033,
+        117.94344478439646,
+        27.651873854179545,
+        117.94272447694117,
+        27.6514077726631,
+        117.94186293387085,
+        27.65091344423916,
+        117.9414392237932,
+        27.650475610977136,
+        117.94112850242304,
+        27.650122518976357,
+        117.94105788407674,
+        27.649416335513582,
+        117.94114205599438,
+        27.64882257115619,
+        117.94125504524067,
+        27.648328242732262,
+        117.94133978757948,
+        27.647918656108324,
+        117.9416222609646,
+        27.6475796878307,
+        117.94220133118853,
+        27.647396080238128,
+        117.94290751465131,
+        27.64760793527696,
+        117.94352895631407,
+        27.647989274454602,
+        117.94415688318216,
+        27.64795454072547,
+        117.94491956153745,
+        27.64765794280906,
+        117.94552687974645,
+        27.6471353680164,
+        117.94617656831669,
+        27.646711657938734,
+        117.94723584351084,
+        27.646513925814872,
+        117.94822352141837,
+        27.646712634166473,
+        117.94840712954966,
+        27.64723521003669,
+        117.94867547948103,
+        27.64818149544578
+      ],
+      "title":"路线一路线一路线一",
+      "description":"<div class=\"item-main\">\
+      <div class=\"txt\">\
+          <a href=\"http://www.dazijia.com/zuji/40825.html\">武夷山可以从里面的那个门，嗯，在旁边刚好是个正岩村，从那个地方进门去逛景点也好，买茶叶也比较好，不用都挤到那个最前那个门，最前头的门来来回回挤的特别不方便，这就适合那些些悠闲的人过来转悠的，不不不要太着急。</a>\
+      </div>\
+      <div class=\"pic\">\
+          <div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df365b39b_200_200.jpg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df365b39b_200_200.jpg\" style=\"display: inline;\"></div><div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df376f7a2_200_200.jpg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df376f7a2_200_200.jpg\" style=\"display: inline;\"></div><div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df37e70e4_200_200.jpg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df37e70e4_200_200.jpg\" style=\"display: inline;\"></div><div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df4e1d8e5_200_200.jpg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191012/5da1df4e1d8e5_200_200.jpg\" style=\"display: inline;\"></div>                                       <span class=\"img-num\">6</span>\
+          <div class=\"clear\"></div>\
+      </div>\
+      <div class=\"tool clearfix\">\
+          <div class=\"zj-sec\"><i class=\"camera-solid\" title=\"游玩景点\"></i><span><a href=\"http://www.dazijia.com/jingdian/656.html\">武夷山风景名胜区</a></span></div>\
+          <div class=\"zj-like\"><i class=\"heart-solid\" title=\"喜欢点赞\"></i><span>0喜欢</span></div>\
+          <div class=\"zj-time-1\"><i class=\"clock-solid\"></i><span>2019-10-12 22:12:42</span></div>\
+      </div>\
+  </div>"
+    },
+    {
+    "label": "路线二",
+    "labelPosition": {
+      "lng": 117.95691897837101,
+      "lat": 27.6558807548145
+      },
+    "themeColor": "#27ae60",
+    "points": [
+        117.95669525225435,
+        27.656879562817,
+        117.95676289041495,
+        27.65667144527763,
+        117.9567837020498,
+        27.65649454528979,
+        117.95688255796038,
+        27.656312442442847,
+        117.95690857265282,
+        27.656114730820143,
+        117.95691897837101,
+        27.6558807548145,
+        117.95696580489674,
+        27.65572466665998,
+        117.95692909615619,
+        27.65551626138609,
+        117.9567261814759,
+        27.655537073020938,
+        117.9565700933214,
+        27.655495449155815,
+        117.95657009332139,
+        27.65533415834067
+      ],
+      "title":"路线二路线二路线二",
+      "description":"<div class=\"item-main\">\
+      <div class=\"txt\">\
+          <a href=\"http://www.dazijia.com/zuji/42076.html\">武夷山景区很大的，我们玩的只是其中的一小部分，而且整个景区里面超级的大。看到这么美的景色，也是拍了不少的照片，回来以后慢慢的欣赏。不过应该最主要的是欣赏这里的美好风景。</a>\
+      </div>\
+      <div class=\"pic\">\
+          <div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b5da66bc_200_200.jpeg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b5da66bc_200_200.jpeg\" style=\"display: inline;\"></div><div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b5e965f3_200_200.jpeg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b5e965f3_200_200.jpeg\" style=\"display: inline;\"></div><div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b603722e_200_200.jpeg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b603722e_200_200.jpeg\" style=\"display: inline;\"></div><div class=\"imgs\"><img class=\"lazy\" data-original=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b612f840_200_200.jpeg\" src=\"http://imgs.dazijia.com/Uploads/zuji/20191129/5de12b612f840_200_200.jpeg\" style=\"display: inline;\"></div>                                       <span class=\"img-num\">5</span>\
+          <div class=\"clear\"></div>\
+      </div>\
+      <div class=\"tool clearfix\">\
+          <div class=\"zj-sec\"><i class=\"camera-solid\" title=\"游玩景点\"></i><span><a href=\"http://www.dazijia.com/jingdian/656.html\">武夷山风景名胜区</a></span></div>\
+          <div class=\"zj-like\"><i class=\"heart-solid\" title=\"喜欢点赞\"></i><span>0喜欢</span></div>\
+          <div class=\"zj-time-1\"><i class=\"clock-solid\"></i><span>2019-11-29 22:29:53</span></div>\
+      </div>\
+  </div>"
+    }
+  ]
+})
