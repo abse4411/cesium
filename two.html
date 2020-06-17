@@ -21,6 +21,7 @@
       width: 100%;
       height: 100%;
     }
+
     #pills-tab {
       position: absolute;
       bottom: 0;
@@ -249,9 +250,18 @@
       });
     }
     //getPosition(view2D);
-    //设置点击实体的信息框
-    var handler = new Cesium.ScreenSpaceEventHandler(view2D.scene.canvas);
-    handler.setInputAction(function (event) {
+    //设置双击实体实践
+    var double_click_handler = new Cesium.ScreenSpaceEventHandler(view2D.scene.canvas);
+    double_click_handler.setInputAction(function (event) {
+      let pick = view2D.scene.pick(event.position);
+      let selectedEntity = view2D.selectedEntity;
+      if (pick && selectedEntity) {
+        view2D.zoomTo(selectedEntity);
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+    //设置单击实体显示信息框
+    var left_click_handler = new Cesium.ScreenSpaceEventHandler(view2D.scene.canvas);
+    left_click_handler.setInputAction(function (event) {
       let pick = view2D.scene.pick(event.position);
       let selectedEntity = view2D.selectedEntity;
       if (pick && selectedEntity) {
