@@ -212,6 +212,20 @@
       1.0,
       false
     );
+    //水系分布测试图片
+    var water_layer = addLayerOption(
+      '林区分布',
+      new Cesium.SingleTileImageryProvider({
+        url: 'https://ae01.alicdn.com/kf/H1473906aa85242cfbf62ebefc4f0e519Q.jpg',
+        rectangle: Cesium.Rectangle.fromDegrees(117.9, 27.6, 118.1, 27.8),
+      }), 1, false);
+    //林区分布测试图片
+    var forest_layer = addLayerOption(
+      '林区分布',
+      new Cesium.SingleTileImageryProvider({
+        url: 'https://ae01.alicdn.com/kf/H7c7fd07a7f3f4837854c158c3155f6cbV.jpg',
+        rectangle: Cesium.Rectangle.fromDegrees(117.8, 27.6, 118.0, 27.8),
+      }), 1, false);
     var routeNodes = [];
     //绘制线路以及标签
     //dataResult为本地数据，通过jsonp获取
@@ -276,12 +290,14 @@
             nodes: [
               {
                 text: '水系',
+                layer: water_layer
               },
               {
                 text: '山体',
               },
               {
-                text: "林区"
+                text: "林区",
+                layer: forest_layer
               },
               {
                 text: "峡谷"
